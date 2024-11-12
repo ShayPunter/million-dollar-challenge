@@ -108,8 +108,8 @@ const submit = () => {
             </div>
 
             <div class="mt-6">
-                <Link
-                    :href="route('google.login')"
+                <a
+                    href="/auth/google"
                     class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-vulcan-800 hover:bg-gray-50 dark:hover:bg-vulcan-700"
                 >
                     <svg class="h-5 w-5 mr-2" viewBox="0 0 24 24">
@@ -131,7 +131,7 @@ const submit = () => {
                         />
                     </svg>
                     Continue with Google
-                </Link>
+                </a>
             </div>
         </form>
     </GuestLayout>
