@@ -17,7 +17,7 @@ class GoogleController extends Controller
     public function callback()
     {
         try {
-            $googleUser = Socialite::driver('google')->stateless()->user();
+            $googleUser = Socialite::driver('google')->user();
 
             $user = User::updateOrCreate([
                 'google_id' => $googleUser->id,
