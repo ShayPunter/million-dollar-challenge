@@ -10,10 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 class GoogleController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
 
     public function redirect()
     {
