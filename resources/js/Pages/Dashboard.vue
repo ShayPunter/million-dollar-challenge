@@ -19,7 +19,7 @@
                         <div>
                             <InputLabel for="slug" value="Page URL" />
                             <div class="flex items-center mt-1">
-                                <span class="text-gray-500 dark:text-gray-400 mr-2">mymilliondollargrid.com/</span>
+                                <span class="text-gray-500 dark:text-gray-400 mr-2">mymilliondollargrid.com/grid/</span>
                                 <TextInput
                                     id="slug"
                                     v-model="form.slug"
@@ -225,7 +225,7 @@
                         <div>
                             <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Page URL</label>
                             <div class="mt-1 flex items-center">
-                                <span class="text-gray-500 dark:text-gray-400">mymilliondollargrid.com/</span>
+                                <span class="text-gray-500 dark:text-gray-400">mymilliondollargrid.com/grid/</span>
                                 <span class="text-gray-900 dark:text-gray-100">{{ page.slug }}</span>
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserPageController;
@@ -49,7 +50,13 @@ Route::prefix('v1')->group(function () {
     Route::get('/challenges/{id}/revenues', [RevenueController::class, 'index']);
 });
 
-Route::get('/{slug}', [UserPageController::class, 'show'])->name('public-page');
+Route::get('auth/google', [GoogleController::class, 'redirect'])
+    ->name('google.login');
+
+Route::get('auth/google/callback', [GoogleController::class, 'callback'])
+    ->name('google.callback');
+
+Route::get('/grid/{slug}', [UserPageController::class, 'show'])->name('public-page');
 
 
 require __DIR__.'/auth.php';

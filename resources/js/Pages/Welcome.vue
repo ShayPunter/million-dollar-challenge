@@ -1,135 +1,182 @@
 <template>
-    <div class="bg-gray-50 dark:bg-gray-900">
-        <!-- Hero Section -->
-        <div class="relative isolate">
-            <div class="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
-                <div class="text-center">
-                    <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-6xl">
-                        Track Your Journey to $1,000,000
-                    </h1>
-                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-                        Visualize your progress, track multiple revenue streams, and share your journey to becoming a millionaire.
-                    </p>
-                    <div class="mt-10 flex items-center justify-center gap-x-6">
+    <Head>
+        <title>The Million Dollar Grid Tracker</title>
+        <meta name="description" content="Create your own unique million dollar grid and share with the world your progress to a million dollars.">
+    </Head>
+    <div class="bg-vulcan-50 dark:bg-vulcan-950">
+
+        <nav class="bg-white dark:bg-vulcan-950 border-b border-vulcan-100 dark:border-vulcan-800">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <!-- Logo Section -->
+                    <div class="flex items-center z-10">
+                        <Link class="flex items-center">
+                            <img
+                                class="h-8 w-auto"
+                                src="/logo1m.png"
+                                alt="MyMillionDollarGrid"
+                            />
+                            <span class="ml-3 text-lg font-semibold text-vulcan-900 dark:text-vulcan-50">
+                        MyMillionDollarGrid
+                    </span>
+                        </Link>
+                    </div>
+
+                    <!-- Navigation Links -->
+                    <div class="flex items-center space-x-4 z-10">
                         <Link
-                            :href="route('register')"
-                            class="rounded-md bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            href="/login"
+                            class="text-vulcan-600 dark:text-vulcan-300 hover:text-vulcan-900 dark:hover:text-vulcan-100 px-3 py-2 text-sm font-medium"
+                        >
+                            Log in
+                        </Link>
+                        <Link
+                            href="/register"
+                            class="bg-vulcan-600 text-white hover:bg-vulcan-500 px-3 py-2 rounded-md text-sm font-medium"
                         >
                             Get Started
                         </Link>
-                        <Link
-                            :href="route('login')"
-                            class="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100"
-                        >
-                            Log in <span aria-hidden="true">→</span>
-                        </Link>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="relative isolate">
+            <!-- Background gradient effect -->
+            <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+                <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-vulcan-400 to-vulcan-600 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
+            </div>
+
+            <div class="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left side: Text content -->
+                    <div>
+                        <h1 class="text-4xl font-bold tracking-tight text-vulcan-900 dark:text-vulcan-50 sm:text-6xl">
+                            Track Your Journey to $1,000,000
+                        </h1>
+                        <p class="mt-6 text-lg leading-8 text-vulcan-600 dark:text-vulcan-300">
+                            Visualize your progress, track multiple revenue streams, and share your journey to becoming a millionaire.
+                        </p>
+                        <div class="mt-10 flex items-center gap-x-6">
+                            <Link
+                                href="/register"
+                                class="rounded-md bg-vulcan-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-vulcan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vulcan-600"
+                            >
+                                Get Started
+                            </Link>
+                            <Link
+                                href="/login"
+                                class="text-sm font-semibold leading-6 text-vulcan-900 dark:text-vulcan-100"
+                            >
+                                Log in <span aria-hidden="true">→</span>
+                            </Link>
+                        </div>
+                    </div>
+
+                    <!-- Right side: Hero Image -->
+                    <div class="relative rounded-xl overflow-hidden shadow-xl">
+                        <img
+                            src="/hero.png"
+                            alt="Million Dollar Grid Dashboard"
+                            class="w-full h-auto"
+                        />
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Feature Section -->
-        <div class="py-24 sm:py-32">
+        <div class="py-24 sm:py-32 bg-white dark:bg-vulcan-900">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:text-center">
-                    <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">Track & Share</h2>
-                    <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
+                    <h2 class="text-base font-semibold leading-7 text-vulcan-600 dark:text-vulcan-300">Track & Share</h2>
+                    <p class="mt-2 text-3xl font-bold tracking-tight text-vulcan-900 dark:text-vulcan-50 sm:text-4xl">
                         Everything you need to track your million dollar journey
                     </p>
                 </div>
-                <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-                    <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-                        <!-- Feature 1 -->
-                        <div class="flex flex-col">
-                            <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100">
-                                <ChartBarSquareIcon class="h-5 w-5 flex-none text-indigo-600 dark:text-indigo-400" />
-                                Visual Progress Tracking
-                            </dt>
-                            <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-400">
-                                <p class="flex-auto">Watch your progress with our unique cube grid visualization. Each cube represents $1,000 towards your goal.</p>
-                            </dd>
-                        </div>
+                <dl class="mx-auto mt-16 grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+                    <div class="flex flex-col">
+                        <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-vulcan-900 dark:text-vulcan-50">
+                            <ChartBarSquareIcon class="h-5 w-5 flex-none text-vulcan-600 dark:text-vulcan-400" />
+                            Visual Progress Tracking
+                        </dt>
+                        <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-vulcan-600 dark:text-vulcan-300">
+                            <p class="flex-auto">Watch your progress with our unique cube grid visualization. Each cube represents $1,000 towards your goal.</p>
+                        </dd>
+                    </div>
 
-                        <!-- Feature 2 -->
-                        <div class="flex flex-col">
-                            <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100">
-                                <FolderIcon class="h-5 w-5 flex-none text-indigo-600 dark:text-indigo-400" />
-                                Multiple Projects
-                            </dt>
-                            <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-400">
-                                <p class="flex-auto">Organize your revenue streams into different projects. Track and manage each source separately.</p>
-                            </dd>
-                        </div>
+                    <div class="flex flex-col">
+                        <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-vulcan-900 dark:text-vulcan-50">
+                            <FolderIcon class="h-5 w-5 flex-none text-vulcan-600 dark:text-vulcan-400" />
+                            Multiple Projects
+                        </dt>
+                        <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-vulcan-600 dark:text-vulcan-300">
+                            <p class="flex-auto">Organize your revenue streams into different projects. Track and manage each source separately.</p>
+                        </dd>
+                    </div>
 
-                        <!-- Feature 3 -->
-                        <div class="flex flex-col">
-                            <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100">
-                                <ShareIcon class="h-5 w-5 flex-none text-indigo-600 dark:text-indigo-400" />
-                                Share Your Journey
-                            </dt>
-                            <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-400">
-                                <p class="flex-auto">Get your own public page to share your progress with the world and inspire others.</p>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
+                    <div class="flex flex-col">
+                        <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-vulcan-900 dark:text-vulcan-50">
+                            <ShareIcon class="h-5 w-5 flex-none text-vulcan-600 dark:text-vulcan-400" />
+                            Share Your Journey
+                        </dt>
+                        <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-vulcan-600 dark:text-vulcan-300">
+                            <p class="flex-auto">Get your own public page to share your progress with the world and inspire others.</p>
+                        </dd>
+                    </div>
+                </dl>
             </div>
         </div>
 
-        <!-- Demo Section -->
-        <div class="relative isolate overflow-hidden bg-white dark:bg-gray-800 py-24 sm:py-32">
+        <!-- Live Example Section -->
+        <div class="relative isolate overflow-hidden bg-vulcan-50 dark:bg-vulcan-900 py-24 sm:py-32">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl lg:mx-0">
-                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">See it in action</h2>
-                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-                        Check out how your progress will be visualized with our unique cube grid system.
+                    <h2 class="text-3xl font-bold tracking-tight text-vulcan-900 dark:text-vulcan-50 sm:text-4xl">
+                        See it in action
+                    </h2>
+                    <p class="mt-6 text-lg leading-8 text-vulcan-600 dark:text-vulcan-300">
+                        Check out a live example of someone tracking their journey to $1M.
                     </p>
                 </div>
 
-                <!-- Demo Grid -->
-                <div class="mt-16 rounded-xl bg-gray-50 dark:bg-gray-900 p-8">
-                    <div class="flex justify-center">
-                        <div class="inline-grid grid-cols-40 gap-[3px]">
-                            <div
-                                v-for="i in 1000"
-                                :key="i"
-                                class="w-3 h-3 relative"
-                            >
-                                <div
-                                    v-if="i <= 100"
-                                    class="absolute top-0 left-0 w-full h-full z-10 animate-big-pulse bg-green-500 dark:bg-green-600 pointer-events-none"
-                                />
-                                <div
-                                    class="block w-full h-full relative group transition-all duration-200"
-                                    :class="[
-                                        i <= 100
-                                            ? 'bg-green-500 dark:bg-green-600 animate-scale-in'
-                                            : 'bg-gray-200 dark:bg-gray-700'
-                                    ]"
-                                    :style="{ 'animation-delay': `${i * 10}ms` }"
-                                >
-                                </div>
-                            </div>
-                        </div>
+                <!-- Live Example Frame -->
+                <div class="mt-16 rounded-xl bg-white dark:bg-vulcan-800 p-8 shadow-xl">
+                    <div class="aspect-[16/9] overflow-hidden rounded-lg">
+                        <iframe
+                            src="https://mymilliondollargrid.com/grid/shaypunter"
+                            class="w-full h-full"
+                            frameborder="0"
+                        ></iframe>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <a
+                            href="https://mymilliondollargrid.com/grid/shaypunter"
+                            target="_blank"
+                            class="text-vulcan-600 dark:text-vulcan-300 hover:text-vulcan-500 dark:hover:text-vulcan-200"
+                        >
+                            View full page →
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- CTA Section -->
-        <div class="py-24 sm:py-32">
+        <div class="py-24 sm:py-32 bg-white dark:bg-vulcan-900">
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
                 <div class="mx-auto max-w-2xl text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
+                    <h2 class="text-3xl font-bold tracking-tight text-vulcan-900 dark:text-vulcan-50 sm:text-4xl">
                         Ready to start your journey?
                     </h2>
-                    <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600 dark:text-gray-400">
+                    <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-vulcan-600 dark:text-vulcan-300">
                         Create your account now and begin tracking your progress towards one million dollars.
                     </p>
                     <div class="mt-10 flex items-center justify-center gap-x-6">
                         <Link
                             :href="route('register')"
-                            class="rounded-md bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            class="rounded-md bg-vulcan-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-vulcan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vulcan-600"
                         >
                             Get Started for Free
                         </Link>
@@ -139,18 +186,18 @@
         </div>
 
         <!-- Footer -->
-        <footer class="bg-white dark:bg-gray-800">
+        <footer class="bg-vulcan-50 dark:bg-vulcan-950">
             <div class="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
                 <div class="flex justify-center space-x-6 md:order-2">
-                    <Link :href="route('login')" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                    <Link :href="route('login')" class="text-vulcan-500 hover:text-vulcan-600 dark:text-vulcan-400 dark:hover:text-vulcan-300">
                         Login
                     </Link>
-                    <Link :href="route('register')" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+                    <Link :href="route('register')" class="text-vulcan-500 hover:text-vulcan-600 dark:text-vulcan-400 dark:hover:text-vulcan-300">
                         Sign up
                     </Link>
                 </div>
                 <div class="mt-8 md:order-1 md:mt-0">
-                    <p class="text-center text-xs leading-5 text-gray-500 dark:text-gray-400">
+                    <p class="text-center text-xs leading-5 text-vulcan-500 dark:text-vulcan-400">
                         &copy; {{ new Date().getFullYear() }} MyMillionDollarGrid. All rights reserved.
                     </p>
                 </div>
@@ -158,10 +205,10 @@
         </footer>
     </div>
 </template>
-
 <script setup>
 import { Link } from '@inertiajs/vue3'
 import { ChartBarSquareIcon, FolderIcon, ShareIcon } from '@heroicons/vue/24/outline'
+import {Head} from "@inertiajs/vue3";
 </script>
 
 <style>
