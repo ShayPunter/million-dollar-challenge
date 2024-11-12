@@ -10,7 +10,7 @@
                 <div class="flex justify-between h-16 items-center">
                     <!-- Logo Section -->
                     <div class="flex items-center z-10">
-                        <Link class="flex items-center">
+                        <a class="flex items-center">
                             <img
                                 class="h-8 w-auto"
                                 src="/logo1m.png"
@@ -19,23 +19,23 @@
                             <span class="ml-3 text-lg font-semibold text-vulcan-900 dark:text-vulcan-50">
                         MyMillionDollarGrid
                     </span>
-                        </Link>
+                        </a>
                     </div>
 
                     <!-- Navigation Links -->
                     <div class="flex items-center space-x-4 z-10">
-                        <Link
+                        <a
                             href="/login"
                             class="text-vulcan-600 dark:text-vulcan-300 hover:text-vulcan-900 dark:hover:text-vulcan-100 px-3 py-2 text-sm font-medium"
                         >
                             Log in
-                        </Link>
-                        <Link
+                        </a>
+                        <a
                             href="/register"
                             class="bg-vulcan-600 text-white hover:bg-vulcan-500 px-3 py-2 rounded-md text-sm font-medium"
                         >
                             Get Started
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -59,18 +59,18 @@
                             Visualize your progress, track multiple revenue streams, and share your journey to becoming a millionaire.
                         </p>
                         <div class="mt-10 flex items-center gap-x-6">
-                            <Link
+                            <a
                                 href="/register"
                                 class="rounded-md bg-vulcan-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-vulcan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vulcan-600"
                             >
                                 Get Started
-                            </Link>
-                            <Link
+                            </a>
+                            <a
                                 href="/login"
                                 class="text-sm font-semibold leading-6 text-vulcan-900 dark:text-vulcan-100"
                             >
                                 Log in <span aria-hidden="true">→</span>
-                            </Link>
+                            </a>
                         </div>
                     </div>
 
@@ -174,12 +174,12 @@
                         Create your account now and begin tracking your progress towards one million dollars.
                     </p>
                     <div class="mt-10 flex items-center justify-center gap-x-6">
-                        <Link
-                            :href="route('register')"
+                        <a
+                            href="/register"
                             class="rounded-md bg-vulcan-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-vulcan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vulcan-600"
                         >
                             Get Started for Free
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -189,12 +189,12 @@
         <footer class="bg-vulcan-50 dark:bg-vulcan-950">
             <div class="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
                 <div class="flex justify-center space-x-6 md:order-2">
-                    <Link :href="route('login')" class="text-vulcan-500 hover:text-vulcan-600 dark:text-vulcan-400 dark:hover:text-vulcan-300">
+                    <a href="/login" class="text-vulcan-500 hover:text-vulcan-600 dark:text-vulcan-400 dark:hover:text-vulcan-300">
                         Login
-                    </Link>
-                    <Link :href="route('register')" class="text-vulcan-500 hover:text-vulcan-600 dark:text-vulcan-400 dark:hover:text-vulcan-300">
+                    </a>
+                    <a href="/register" class="text-vulcan-500 hover:text-vulcan-600 dark:text-vulcan-400 dark:hover:text-vulcan-300">
                         Sign up
-                    </Link>
+                    </a>
                 </div>
                 <div class="mt-8 md:order-1 md:mt-0">
                     <p class="text-center text-xs leading-5 text-vulcan-500 dark:text-vulcan-400">
