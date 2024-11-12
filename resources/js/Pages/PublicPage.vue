@@ -75,7 +75,7 @@
 
                             <div class="flex flex-col max-w-[37rem] mx-auto lg:flex-row gap-4 lg:gap-0 items-center justify-between mt-2">
                                 <p class="text-sm text-gray-700 dark:text-gray-400"><strong class="dark:text-gray-200">${{ numberFormat(stats.total_revenue) }}</strong> of $1,000,000 goal</p>
-                                <p class="text-sm text-gray-700 dark:text-gray-400"><span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-1 animate-pulse"></span><strong class="dark:text-gray-200 mr-1">Last Update:</strong>{{ formatLastUpdate(stats.last_updated.updated_at) }}</p>
+                                <p class="text-sm text-gray-700 dark:text-gray-400"><span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-1 animate-pulse"></span><strong class="dark:text-gray-200 mr-1">Last Update:</strong> <span v-if="stats.last_updated.updated_at">{{ formatLastUpdate(stats.last_updated.updated_at) }}</span> <span v-else>Not updated yet.</span></p>
                             </div>
                             <p class="mt-4 text-sm text-center font-medium text-gray-500 dark:text-gray-400 mb-4">Each cube represents $1,000</p>
                         </div>
