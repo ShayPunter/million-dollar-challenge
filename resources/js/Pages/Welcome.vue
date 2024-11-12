@@ -200,6 +200,10 @@
                     <p class="text-center text-xs leading-5 text-vulcan-500 dark:text-vulcan-400">
                         &copy; {{ new Date().getFullYear() }} MyMillionDollarGrid. All rights reserved.
                     </p>
+
+                    <a href="/tos" class="text-center underline text-xs leading-5 text-vulcan-500 dark:text-vulcan-400">
+                        Privacy Policy & Terms and Conditions
+                    </a>
                 </div>
             </div>
         </footer>

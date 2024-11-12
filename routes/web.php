@@ -58,5 +58,8 @@ Route::get('auth/google/callback', [GoogleController::class, 'callback'])
 
 Route::get('/grid/{slug}', [UserPageController::class, 'show'])->name('public-page');
 
+Route::get('/tos', function() {
+    return Inertia::render('TOS');
+});
 
 require __DIR__.'/auth.php';
