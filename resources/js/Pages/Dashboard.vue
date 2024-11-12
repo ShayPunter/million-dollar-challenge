@@ -213,7 +213,7 @@
                 </template>
 
                 <!-- Add this section in your dashboard after the projects section -->
-                <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
+                <div v-if="hasPage" class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">Page Settings</h2>
                         <PrimaryButton @click="openPageSettingsModal">
