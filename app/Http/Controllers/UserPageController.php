@@ -45,7 +45,7 @@ class UserPageController extends Controller
             'total_revenue' => $totalRevenue,
             'completed_cubes' => floor($totalRevenue / 1000),
             'progress_to_next_cube' => $totalRevenue % 1000,
-            'last_updated' => $lastUpdate,
+            'last_updated' => $lastUpdate ? $lastUpdate->updated_at : null,
             'user' => $page->user,
             'projects' => $page->user->projects->map(function ($project) {
                 return [
