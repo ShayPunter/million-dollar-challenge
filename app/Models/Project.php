@@ -15,7 +15,7 @@ class Project extends Model
         parent::boot();
 
         // This will delete all associated revenues when a project is deleted
-        static::deleting(function($project) {
+        static::deleting(function ($project) {
             $project->revenues()->delete();
         });
     }
@@ -30,7 +30,8 @@ class Project extends Model
         return $this->hasMany(Revenue::class);
     }
 
-    public function getAmountAttribute() {  // Change the method to this
+    public function getAmountAttribute()
+    {
         return $this->revenues()->sum('amount');
     }
 }
