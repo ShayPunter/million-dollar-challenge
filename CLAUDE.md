@@ -24,8 +24,12 @@ Live: https://mymilliondollargrid.com/ (Laravel Forge, MariaDB).
 
 ## Testing notes
 
+- Feature tests render the Blade layout and need `public/build/manifest.json`: run `npm run build`
+  before `php artisan test` on a fresh checkout.
 - `phpunit.xml` forces in-memory SQLite. Never run tests against the `.env` database: the Pest
   suite uses `RefreshDatabase` and would wipe it.
+- `pint` is not always idempotent (a trailing comment after a method signature took two passes);
+  run `pint --test` after `pint`.
 - Playwright (`playwright.config.js`) starts `php artisan serve` with env-var overrides pointing at
   `storage/e2e/e2e.sqlite`. Environment variables beat `.env` in Laravel, so the real database is
   never touched. The DB is reset by the webServer command, not by the config file (workers reload

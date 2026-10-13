@@ -41,11 +41,12 @@ jobs:
       - name: Lint (Pint)
         run: ./vendor/bin/pint --test
 
-      - name: Unit and feature tests
-        run: php artisan test
-
+      # Feature tests render the Blade layout, which needs the Vite manifest.
       - name: Build assets
         run: npm run build
+
+      - name: Unit and feature tests
+        run: php artisan test
 
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
