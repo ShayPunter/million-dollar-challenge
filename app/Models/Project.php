@@ -30,7 +30,8 @@ class Project extends Model
         return $this->hasMany(Revenue::class);
     }
 
-    public function getAmountAttribute()  // Change the method to this
-    {return $this->revenues()->sum('amount');
+    public function getAmountAttribute()
+    {
+        return $this->revenues()->sum('amount');
     }
 }
