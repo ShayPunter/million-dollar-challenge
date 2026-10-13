@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Challenge;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Revenue extends Model
 {

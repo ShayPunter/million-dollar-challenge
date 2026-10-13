@@ -43,7 +43,6 @@ class ProjectController extends Controller
         return redirect()->back();
     }
 
-
     public function destroy(Request $request, Project $project)
     {
         if ($project->user_id !== $request->user()->id) {
@@ -55,5 +54,4 @@ class ProjectController extends Controller
 
         return redirect()->back();
     }
-
 }

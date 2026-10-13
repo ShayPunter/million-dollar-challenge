@@ -1,16 +1,16 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserPageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\ChallengeController;
-use App\Http\Controllers\RevenueController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -37,7 +37,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/user-page', [UserPageController::class, 'store'])->name('user-page.store');
     Route::put('/user-page', [UserPageController::class, 'update'])->name('user-page.update');
 
-
     Route::resource('projects', ProjectController::class);
     Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
@@ -63,7 +62,7 @@ Route::get('auth/google/callback', [GoogleController::class, 'callback'])
 
 Route::get('/grid/{slug}', [UserPageController::class, 'show'])->name('public-page');
 
-Route::get('/tos', function() {
+Route::get('/tos', function () {
     return Inertia::render('TOS');
 });
 

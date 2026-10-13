@@ -25,7 +25,7 @@ class ChallengeController extends Controller
     public function show($id)
     {
         $challenge = Challenge::where('unique_id', $id)
-            ->with(['revenues' => function($query) {
+            ->with(['revenues' => function ($query) {
                 $query->orderBy('created_at', 'desc');
             }])
             ->firstOrFail();

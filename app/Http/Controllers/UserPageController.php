@@ -53,7 +53,7 @@ class UserPageController extends Controller
                     'name' => $project->name,
                     'total' => $project->revenues_sum_amount ?? 0,
                 ];
-            })
+            }),
         ];
 
         return Inertia::render('PublicPage', [
@@ -69,7 +69,7 @@ class UserPageController extends Controller
     {
         $page = $request->user()->userPage;
 
-        if (!$page) {
+        if (! $page) {
             abort(404);
         }
 
