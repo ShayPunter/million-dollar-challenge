@@ -48,6 +48,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function isAdmin(): bool
+    {
+        return in_array(strtolower($this->email), config('app.admin_emails'), true);
+    }
+
     public function userPage()
     {
         return $this->hasOne(UserPage::class);
