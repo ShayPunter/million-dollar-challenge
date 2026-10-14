@@ -8,8 +8,6 @@ class Project extends Model
 {
     protected $fillable = ['name'];
 
-    protected $appends = ['amount'];
-
     protected static function boot()
     {
         parent::boot();
@@ -28,10 +26,5 @@ class Project extends Model
     public function revenues()
     {
         return $this->hasMany(Revenue::class);
-    }
-
-    public function getAmountAttribute()
-    {
-        return $this->revenues()->sum('amount');
     }
 }

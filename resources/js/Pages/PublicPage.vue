@@ -1,7 +1,7 @@
 <template>
     <Head>
         <title>{{ stats.user.name }}'s $1M Grid</title>
-        <meta name="description" content="{{ stats.user.name }}'s has made ${{ numberFormat(stats.total_revenue) }} on their journey, view their grid and create your own.">
+        <meta name="description" :content="`${stats.user.name} has made $${numberFormat(stats.total_revenue)} on their journey. View their grid and create your own.`">
         <meta name="robots" content="noindex,nofollow">
     </Head>
 

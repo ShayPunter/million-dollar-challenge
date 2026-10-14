@@ -37,9 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/user-page', [UserPageController::class, 'store'])->name('user-page.store');
     Route::put('/user-page', [UserPageController::class, 'update'])->name('user-page.update');
 
-    Route::resource('projects', ProjectController::class);
-    Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
-    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    Route::resource('projects', ProjectController::class)->only(['index', 'store', 'update', 'destroy']);
 
     Route::post('/revenues', [RevenueController::class, 'store'])->name('revenues.store');
     Route::put('/revenues/{revenue}', [RevenueController::class, 'update'])->name('revenues.update');
