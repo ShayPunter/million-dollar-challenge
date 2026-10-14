@@ -51,3 +51,10 @@ test('register, build a grid and see it on the public page', async ({ page, brow
     expect(html).not.toContain('email_verified_at');
     await guest.close();
 });
+
+test('a failed Google sign-in shows a generic error on the login page', async ({ page }) => {
+    // No OAuth state in the session, so Socialite rejects the callback.
+    await page.goto('/auth/google/callback?code=fake&state=fake');
+    await expect(page).toHaveURL(/\/login$/);
+    await expect(page.getByRole('alert')).toHaveText('Google sign-in failed, please try again.');
+});
