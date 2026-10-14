@@ -1,6 +1,6 @@
 # My Million Dollar Grid
 
-Laravel 11 + Inertia/Vue 3 app for tracking revenue towards $1M as a 1,000-square grid.
+Laravel 12 + Inertia/Vue 3 app for tracking revenue towards $1M as a 1,000-square grid.
 Repo: `ShayPunter/million-dollar-challenge` (stays on Shay's personal account, not PunterDigital).
 Live: https://mymilliondollargrid.com/ (Laravel Forge, MariaDB).
 
