@@ -49,9 +49,15 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Matching the email isn't enough on its own: the account must also have signed in
+     * with Google and have a verified email, so a password sign-up can't claim it.
+     */
     public function isAdmin(): bool
     {
-        return in_array(strtolower($this->email), config('app.admin_emails'), true);
+        return $this->google_id !== null
+            && $this->email_verified_at !== null
+            && in_array(strtolower($this->email), config('app.admin_emails'), true);
     }
 
     public function userPage()
