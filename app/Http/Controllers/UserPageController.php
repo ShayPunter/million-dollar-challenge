@@ -46,7 +46,10 @@ class UserPageController extends Controller
             'completed_cubes' => floor($totalRevenue / 1000),
             'progress_to_next_cube' => $totalRevenue % 1000,
             'last_updated' => $lastUpdate ? $lastUpdate->updated_at : null,
-            'user' => $page->user,
+            // Public page: expose only what it renders, never the owner's account fields.
+            'user' => [
+                'name' => $page->user->name,
+            ],
             'projects' => $page->user->projects->map(function ($project) {
                 return [
                     'id' => $project->id,

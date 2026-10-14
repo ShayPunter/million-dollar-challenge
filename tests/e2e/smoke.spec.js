@@ -9,7 +9,7 @@ test('home page renders', async ({ page }) => {
     expect(errors).toEqual([]);
 });
 
-test('register, build a grid and see it on the public page', async ({ page }) => {
+test('register, build a grid and see it on the public page', async ({ page, browser }) => {
     const id = Date.now();
     const slug = `e2e-${id}`;
 
@@ -40,4 +40,14 @@ test('register, build a grid and see it on the public page', async ({ page }) =>
     await page.goto(`/grid/${slug}`);
     await expect(page.getByText('My E2E Grid')).toBeVisible();
     await expect(page.getByText('$2,500').first()).toBeVisible();
+
+    // A guest must not see the owner's account details (Inertia props are in the HTML).
+    const guest = await browser.newContext();
+    const guestPage = await guest.newPage();
+    await guestPage.goto(`/grid/${slug}`);
+    await expect(guestPage.getByText('My E2E Grid')).toBeVisible();
+    const html = await guestPage.content();
+    expect(html).not.toContain(`e2e-${id}@example.test`);
+    expect(html).not.toContain('email_verified_at');
+    await guest.close();
 });
