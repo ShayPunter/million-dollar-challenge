@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
+use Throwable;
 
 class GoogleController extends Controller
 {
@@ -19,12 +20,9 @@ class GoogleController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
 
-            // Debug log
-            Log::info('Google user:', ['user' => $googleUser]);
-
             $user = User::updateOrCreate(
                 [
-                    'email' => $googleUser->email,  // Changed this to use email as unique identifier
+                    'email' => $googleUser->email,
                 ],
                 [
                     'name' => $googleUser->name,
@@ -33,21 +31,17 @@ class GoogleController extends Controller
                 ]
             );
 
-            // Debug log
-            Log::info('Created/Updated user:', ['user' => $user]);
-
             Auth::login($user);
 
-            // Debug log
-            Log::info('Auth check:', ['authenticated' => Auth::check()]);
+            return redirect()->intended('/dashboard');
+        } catch (Throwable $e) {
+            // Log only the exception type and message: never the Socialite user or its tokens.
+            Log::warning('Google sign-in failed', [
+                'exception' => $e::class,
+                'message' => $e->getMessage(),
+            ]);
 
-            return redirect()->intended('/dashboard');  // Changed to intended()
-
-        } catch (\Exception $e) {
-            // Log the error
-            Log::error('Google auth error:', ['error' => $e->getMessage()]);
-
-            return redirect()->route('login')->with('error', 'Google authentication failed: '.$e->getMessage());
+            return redirect()->route('login')->with('error', 'Google sign-in failed, please try again.');
         }
     }
 }
