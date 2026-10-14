@@ -7,7 +7,7 @@ Log revenue against your projects, and share a public page of your grid at `/gri
 
 ## Stack
 
-Laravel 11 (PHP 8.2+) · Inertia.js + Vue 3 · Tailwind CSS · Vite · MariaDB in production ·
+Laravel 12 (PHP 8.2+) · Inertia.js + Vue 3 · Tailwind CSS · Vite · MariaDB in production ·
 Google sign-in via Laravel Socialite · Pest for tests · Playwright for end-to-end tests.
 
 ## Development
