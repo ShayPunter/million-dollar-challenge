@@ -40,6 +40,10 @@ test('register, build a grid and see it on the public page', async ({ page, brow
     await page.goto(`/grid/${slug}`);
     await expect(page.getByText('My E2E Grid')).toBeVisible();
     await expect(page.getByText('$2,500').first()).toBeVisible();
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+        'content',
+        'E2E User has made $2,500 on their journey. View their grid and create your own.',
+    );
 
     // A guest must not see the owner's account details (Inertia props are in the HTML).
     const guest = await browser.newContext();

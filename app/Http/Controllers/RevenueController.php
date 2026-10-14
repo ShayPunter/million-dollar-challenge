@@ -13,7 +13,7 @@ class RevenueController extends Controller
     {
         $validated = $request->validate([
             'project_id' => 'required|exists:projects,id',
-            'amount' => 'required|numeric|min:0',
+            'amount' => 'required|numeric|min:0|max:9999999999.99',
         ]);
 
         $project = Project::findOrFail($validated['project_id']);
@@ -48,7 +48,7 @@ class RevenueController extends Controller
         }
 
         $validated = $request->validate([
-            'amount' => 'required|numeric|min:0',
+            'amount' => 'required|numeric|min:0|max:9999999999.99',
         ]);
 
         $revenue->update($validated);

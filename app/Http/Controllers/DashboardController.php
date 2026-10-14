@@ -20,6 +20,7 @@ class DashboardController extends Controller
         // Get projects with their total revenue
         $projects = $user->projects()
             ->with('revenues')
+            ->withSum('revenues as amount', 'amount')
             ->get();
 
         // Calculate total progress
