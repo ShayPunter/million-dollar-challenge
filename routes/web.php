@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProfileController;
@@ -42,14 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/revenues', [RevenueController::class, 'store'])->name('revenues.store');
     Route::put('/revenues/{revenue}', [RevenueController::class, 'update'])->name('revenues.update');
     Route::delete('/revenues/{revenue}', [RevenueController::class, 'destroy'])->name('revenues.destroy');
-});
-
-Route::prefix('v1')->group(function () {
-    Route::post('/challenges', [ChallengeController::class, 'store']);
-    Route::get('/challenges/{id}', [ChallengeController::class, 'show']);
-    Route::get('/challenges/{id}/progress', [ChallengeController::class, 'progress']);
-    Route::post('/challenges/{id}/revenues', [RevenueController::class, 'store']);
-    Route::get('/challenges/{id}/revenues', [RevenueController::class, 'index']);
 });
 
 Route::get('auth/google', [GoogleController::class, 'redirect'])

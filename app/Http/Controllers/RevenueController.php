@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\Revenue;
-use Challenge;
 use Illuminate\Http\Request;
 
 class RevenueController extends Controller
@@ -28,16 +27,6 @@ class RevenueController extends Controller
         ]);
 
         return redirect()->to('/dashboard');
-    }
-
-    public function index($id)
-    {
-        $challenge = Challenge::where('unique_id', $id)->firstOrFail();
-        $revenues = $challenge->revenues()
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return response()->json($revenues);
     }
 
     public function update(Request $request, Revenue $revenue)

@@ -66,3 +66,13 @@ test('revenue amounts above the column limit are rejected, not a server error', 
         ->post('/revenues', ['project_id' => $project->id, 'amount' => 9999999999.99])
         ->assertSessionHasNoErrors();
 });
+
+test('the removed v1 challenge API returns 404 instead of a server error', function () {
+    $this->get('/v1/challenges/abc')->assertNotFound();
+    $this->get('/v1/challenges/abc/progress')->assertNotFound();
+    $this->get('/v1/challenges/abc/revenues')->assertNotFound();
+    $this->post('/v1/challenges')->assertNotFound();
+
+    $routes = collect(app('router')->getRoutes()->getRoutes())->map->uri();
+    expect($routes->filter(fn ($uri) => str_starts_with($uri, 'v1')))->toBeEmpty();
+});
