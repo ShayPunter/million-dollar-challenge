@@ -45,8 +45,8 @@ Live: https://mymilliondollargrid.com/ (Laravel Forge, MariaDB).
 
 ## Quirks
 
-- `app/Models/Challenge.php` has no namespace and the `/v1/challenges` routes are broken (500).
-  Leftover from an earlier design; see the audit card before touching it.
+- The old `/v1/challenges` API (ChallengeController, a namespace-less `Challenge` model) was removed
+  in #2416. The `challenges` table and its migration are kept on purpose so no data is touched.
 - `/admin` needs an email in `config/app.php` `admin_emails` AND a linked Google account AND a verified
   email (`User::isAdmin`). Google sign-in links to an existing account only if both Google and the
   account have verified the email, and it never overwrites a password (`GoogleController`).
