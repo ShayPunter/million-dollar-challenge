@@ -114,4 +114,17 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Email Verification
+    |--------------------------------------------------------------------------
+    |
+    | Password sign-ups must verify their email before using the app. Set
+    | MAIL_VERIFICATION_REQUIRED=false to switch this off if mail is broken:
+    | everyone is then treated as verified and no verification emails go out.
+    |
+    */
+
+    'verification_required' => (bool) env('MAIL_VERIFICATION_REQUIRED', true),
+
 ];

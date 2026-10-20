@@ -34,6 +34,10 @@ Live: https://mymilliondollargrid.com/ (Laravel Forge, MariaDB).
   `storage/e2e/e2e.sqlite`. Environment variables beat `.env` in Laravel, so the real database is
   never touched. The DB is reset by the webServer command, not by the config file (workers reload
   the config after the server has migrated).
+- E2E env lives in `tests/e2e/env.js` (shared by the config and the specs). Mail uses the array
+  driver, so specs get a verification link from `verificationUrl(email)`, which runs
+  `tests/e2e/verification-url.php` against the same throwaway DB. After verifying, Laravel goes back
+  to the page the prompt interrupted (`/dashboard`, not always `?verified=1`).
 - A stale `public/hot` file (left by `npm run dev`) makes Laravel load assets from the Vite dev
   server and the E2E pages render blank. Delete it before running E2E against a build.
 
@@ -50,3 +54,8 @@ Live: https://mymilliondollargrid.com/ (Laravel Forge, MariaDB).
 - `/admin` needs an email in `config/app.php` `admin_emails` AND a linked Google account AND a verified
   email (`User::isAdmin`). Google sign-in links to an existing account only if both Google and the
   account have verified the email, and it never overwrites a password (`GoogleController`).
+- Email verification (#2501): `User` implements `MustVerifyEmail`; the dashboard, projects, revenues
+  and grid-page routes need `verified`, the profile doesn't. `MAIL_VERIFICATION_REQUIRED=false`
+  (config `auth.verification_required`) makes `hasVerifiedEmail()` true for everyone and stops the
+  emails, without touching `email_verified_at`, which `isAdmin()` still checks. Registration sends
+  the email synchronously, so broken mail in production = a 500 on sign-up: switch the flag off.

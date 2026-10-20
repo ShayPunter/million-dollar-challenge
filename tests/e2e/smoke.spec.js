@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { verificationUrl } from './env.js';
 
 test('home page renders', async ({ page }) => {
     const errors = [];
@@ -19,7 +20,17 @@ test('register, build a grid and see it on the public page', async ({ page, brow
     await page.locator('#password').fill('correct-horse-battery');
     await page.locator('#password_confirmation').fill('correct-horse-battery');
     await page.getByRole('button', { name: 'Register' }).click();
-    await expect(page).toHaveURL(/\/dashboard$/);
+
+    // Password sign-ups verify their email before they can use the app.
+    await expect(page).toHaveURL(/\/verify-email$/);
+    await page.goto('/dashboard');
+    await expect(page).toHaveURL(/\/verify-email$/);
+    await page.getByRole('button', { name: 'Resend Verification Email' }).click();
+    await expect(page.getByText('A new verification link has been sent')).toBeVisible();
+
+    await page.goto(verificationUrl(`e2e-${id}@example.test`));
+    // Back to the page the prompt interrupted (the dashboard visit above).
+    await expect(page).toHaveURL(/\/dashboard(\?verified=1)?$/);
 
     await page.locator('#slug').fill(slug);
     await page.locator('#title').fill('My E2E Grid');
@@ -70,7 +81,7 @@ test('a password sign-up with the admin email is refused the admin panel', async
     await page.locator('#password').fill('correct-horse-battery');
     await page.locator('#password_confirmation').fill('correct-horse-battery');
     await page.getByRole('button', { name: 'Register' }).click();
-    await expect(page).toHaveURL(/\/dashboard$/);
+    await expect(page).toHaveURL(/\/verify-email$/);
 
     const response = await page.goto('/admin');
     expect(response.status()).toBe(403);
