@@ -45,7 +45,7 @@
         <div class="relative isolate">
             <!-- Background gradient effect -->
             <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
-                <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-vulcan-400 to-vulcan-600 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
+                <div class="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-vulcan-400 to-vulcan-600 opacity-20 sm:left-[calc(50%-30rem)] sm:w-288.75"></div>
             </div>
 
             <div class="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
@@ -61,7 +61,7 @@
                         <div class="mt-10 flex items-center gap-x-6">
                             <a
                                 href="/register"
-                                class="rounded-md bg-vulcan-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-vulcan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vulcan-600"
+                                class="rounded-md bg-vulcan-600 px-6 py-3 text-sm font-semibold text-white shadow-xs hover:bg-vulcan-500 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vulcan-600"
                             >
                                 Get Started
                             </a>
@@ -143,7 +143,7 @@
 
                 <!-- Live Example Frame -->
                 <div class="mt-16 rounded-xl bg-white dark:bg-vulcan-800 p-8 shadow-xl">
-                    <div class="aspect-[16/9] overflow-hidden rounded-lg">
+                    <div class="aspect-video overflow-hidden rounded-lg">
                         <iframe
                             src="https://mymilliondollargrid.com/grid/shaypunter"
                             class="w-full h-full"
@@ -176,7 +176,7 @@
                     <div class="mt-10 flex items-center justify-center gap-x-6">
                         <a
                             href="/register"
-                            class="rounded-md bg-vulcan-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-vulcan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vulcan-600"
+                            class="rounded-md bg-vulcan-600 px-6 py-3 text-sm font-semibold text-white shadow-xs hover:bg-vulcan-500 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vulcan-600"
                         >
                             Get Started for Free
                         </a>

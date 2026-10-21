@@ -49,7 +49,7 @@
                             <textarea
                                 id="description"
                                 v-model="form.description"
-                                class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-xs"
                                 :class="{ 'border-red-500': form.errors.description }"
                                 rows="3"
                             />
@@ -110,7 +110,7 @@
                                             <!-- Project Actions Menu -->
                                             <div
                                                 v-show="activeProjectMenu === project.id"
-                                                class="right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-600 ring-1 ring-black ring-opacity-5 z-50"
+                                                class="right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-600 ring-1 ring-black/5 z-50"
                                                 style="position: absolute; min-width: 12rem;"
                                             >
                                                 <div class="py-1">
@@ -269,7 +269,7 @@
                                         id="edit_page_description"
                                         v-model="pageSettingsForm.description"
                                         rows="3"
-                                        class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                        class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-xs"
                                         :class="{ 'border-red-500': pageSettingsForm.errors.description }"
                                     />
                                     <InputError :message="pageSettingsForm.errors.description" class="mt-2" />

@@ -8,7 +8,7 @@
             <div
                 v-for="col in cubesPerRow"
                 :key="col"
-                class="w-4 h-4 m-0.5 rounded-sm transition-all duration-300"
+                class="w-4 h-4 m-0.5 rounded-xs transition-all duration-300"
                 :class="getCubeClasses(getCubeIndex(row, col))"
                 @mouseover="() => emitCubeHover(getCubeIndex(row, col))"
             />

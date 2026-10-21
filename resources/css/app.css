@@ -1,3 +1,55 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+  --font-sans:
+    Figtree, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --grid-template-columns-20: repeat(20, minmax(0, 1fr));
+  --grid-template-columns-40: repeat(40, minmax(0, 1fr));
+
+  --color-vulcan-50: #f4f6fb;
+  --color-vulcan-100: #e8ecf6;
+  --color-vulcan-200: #ccd7eb;
+  --color-vulcan-300: #9fb5da;
+  --color-vulcan-400: #6b8dc5;
+  --color-vulcan-500: #486faf;
+  --color-vulcan-600: #365793;
+  --color-vulcan-700: #2d4677;
+  --color-vulcan-800: #283d64;
+  --color-vulcan-900: #263554;
+  --color-vulcan-950: #0e131f;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+/*
+  Tailwind CSS v4 gives buttons the default cursor; keep v3's pointer.
+*/
+@layer base {
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}

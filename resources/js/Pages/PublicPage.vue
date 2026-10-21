@@ -73,7 +73,7 @@
                                 </div>
                             </div>
 
-                            <div class="flex flex-col max-w-[37rem] mx-auto lg:flex-row gap-4 lg:gap-0 items-center justify-between mt-2">
+                            <div class="flex flex-col max-w-148 mx-auto lg:flex-row gap-4 lg:gap-0 items-center justify-between mt-2">
                                 <p class="text-sm text-gray-700 dark:text-gray-400"><strong class="dark:text-gray-200">${{ numberFormat(stats.total_revenue) }}</strong> of $1,000,000 goal</p>
                                 <p class="text-sm text-gray-700 dark:text-gray-400">
                                     <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-1 animate-pulse"></span>
@@ -90,7 +90,7 @@
                 </div>
 
                 <!-- Projects Breakdown -->
-                <div class="max-w-[37rem] px-14 mx-auto overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="max-w-148 px-14 mx-auto overflow-hidden shadow-xl sm:rounded-lg">
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">Projects/Categories</h2>
 
                     <div class="space-y-2">
