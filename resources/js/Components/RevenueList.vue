@@ -5,7 +5,7 @@
             <div
                 v-for="entry in revenues"
                 :key="entry.id"
-                class="flex justify-between p-2 bg-gray-50 rounded"
+                class="flex justify-between p-2 bg-gray-50 rounded-sm"
             >
                 <div>
                     <div class="font-medium">

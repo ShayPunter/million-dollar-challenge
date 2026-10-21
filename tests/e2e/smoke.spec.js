@@ -1,6 +1,21 @@
 import { expect, test } from '@playwright/test';
 import { verificationUrl } from './env.js';
 
+// Wait for the modal's open transition to finish before clicking inside it.
+// Mid-transition the panel is still transformed and sits above the backdrop,
+// which hid a stacking bug that only users saw (#2881).
+// `field` is an input inside the modal; its panel is the `.shadow-xl` box.
+async function settle(page, field) {
+    await expect
+        .poll(() =>
+            page.locator(field).evaluate((el) => {
+                const panel = el.closest('.shadow-xl');
+                return getComputedStyle(panel).opacity === '1' && document.getAnimations().length === 0;
+            }),
+        )
+        .toBe(true);
+}
+
 test('home page renders', async ({ page }) => {
     const errors = [];
     page.on('pageerror', (err) => errors.push(err.message));
@@ -39,11 +54,13 @@ test('register, build a grid and see it on the public page', async ({ page, brow
     await expect(page.getByRole('heading', { name: 'Projects' })).toBeVisible();
 
     await page.getByRole('button', { name: 'Add Project' }).click();
+    await settle(page, '#project_name');
     await page.locator('#project_name').fill('Side hustle');
     await page.getByRole('button', { name: 'Create Project' }).click();
     await expect(page.getByText('Side hustle')).toBeVisible();
 
     await page.getByRole('button', { name: 'Add Revenue' }).first().click();
+    await settle(page, '#revenue_amount');
     await page.locator('#revenue_amount').fill('2500');
     await page.locator('form').getByRole('button', { name: 'Add Revenue' }).click();
     await expect(page.getByText('$2,500').first()).toBeVisible();

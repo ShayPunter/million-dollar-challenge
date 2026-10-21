@@ -49,6 +49,14 @@ Live: https://mymilliondollargrid.com/ (Laravel Forge, MariaDB).
 
 ## Quirks
 
+- Tailwind CSS 4 via `@tailwindcss/vite` (no `tailwind.config.js` or PostCSS config): theme, the
+  forms plugin and extra sources live in `resources/css/app.css`. v4 drops the `*-opacity-*`
+  utilities (use `bg-black/50`), and its colours are oklch, slightly more saturated than v3's.
+- `Modal.vue`'s panel needs `relative`: without it the positioned backdrop paints over the panel
+  once the open transition ends and swallows every click (v4 `transform` no longer creates a
+  stacking context). E2E clicks during the transition hid this; `settle()` in `smoke.spec.js`
+  waits for the transition to end first (#2881).
+
 - The old `/v1/challenges` API (ChallengeController, a namespace-less `Challenge` model) was removed
   in #2416. The `challenges` table and its migration are kept on purpose so no data is touched.
 - `/admin` needs an email in `config/app.php` `admin_emails` AND a linked Google account AND a verified
