@@ -57,6 +57,10 @@ Live: https://mymilliondollargrid.com/ (Laravel Forge, MariaDB).
   stacking context). E2E clicks during the transition hid this; `settle()` in `smoke.spec.js`
   waits for the transition to end first (#2881).
 
+- Inertia 3 (card 3821, from 1.x): `config/inertia.php` is the published v3 file with SSR off by
+  default (`INERTIA_SSR_ENABLED`, there's no SSR bundle) and the pages path back to `js/Pages`
+  (v3's default `js/pages` breaks `assertInertia()->component()` on case-sensitive Linux CI).
+  The root view uses `<title data-inertia>`. `useForm` keeps `processing` true until `onFinish`.
 - The old `/v1/challenges` API (ChallengeController, a namespace-less `Challenge` model) was removed
   in #2416. The `challenges` table and its migration are kept on purpose so no data is touched.
 - `/admin` needs an email in `config/app.php` `admin_emails` AND a linked Google account AND a verified

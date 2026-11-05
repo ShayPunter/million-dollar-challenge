@@ -103,3 +103,43 @@ test('a password sign-up with the admin email is refused the admin panel', async
     const response = await page.goto('/admin');
     expect(response.status()).toBe(403);
 });
+
+test('update the profile, log out and log back in', async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', (err) => errors.push(err.message));
+    const email = `e2e-login-${Date.now()}@example.test`;
+
+    await page.goto('/register');
+    await page.locator('#name').fill('Login User');
+    await page.locator('#email').fill(email);
+    await page.locator('#password').fill('correct-horse-battery');
+    await page.locator('#password_confirmation').fill('correct-horse-battery');
+    await page.getByRole('button', { name: 'Register' }).click();
+    await expect(page).toHaveURL(/\/verify-email$/);
+    await page.goto(verificationUrl(email));
+    await expect(page).toHaveURL(/\/dashboard(\?verified=1)?$/);
+    // <title data-inertia> (Inertia 3): Head replaces the Blade title, it doesn't add a second.
+    await expect(page).toHaveTitle(/Dashboard - /);
+    await expect(page.locator('title')).toHaveCount(1);
+
+    // useForm + preserveScroll on the profile form.
+    await page.goto('/profile');
+    await page.locator('#name').fill('Renamed User');
+    await page.getByRole('button', { name: 'Save' }).first().click();
+    await expect(page.getByText('Saved.').first()).toBeVisible();
+    await page.reload();
+    await expect(page.locator('#name')).toHaveValue('Renamed User');
+
+    // Log Out is a <Link method="post" as="button">.
+    await page.getByRole('button', { name: 'Renamed User' }).first().click();
+    await page.getByRole('button', { name: 'Log Out' }).first().click();
+    await expect(page).toHaveURL(/\/$/);
+    expect((await page.goto('/dashboard')).url()).toMatch(/\/login$/);
+
+    await page.locator('#email').fill(email);
+    await page.locator('#password').fill('correct-horse-battery');
+    await page.getByRole('button', { name: 'Log in' }).click();
+    await expect(page).toHaveURL(/\/dashboard$/);
+    await expect(page.getByText('Renamed User').first()).toBeVisible();
+    expect(errors).toEqual([]);
+});
