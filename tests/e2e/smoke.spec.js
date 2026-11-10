@@ -143,3 +143,13 @@ test('update the profile, log out and log back in', async ({ page }) => {
     await expect(page.getByText('Renamed User').first()).toBeVisible();
     expect(errors).toEqual([]);
 });
+
+test('/version shows the deployed commit as JSON (#4451)', async ({ request }) => {
+    const response = await request.get('/version');
+    expect(response.ok()).toBe(true);
+    expect(response.headers()['cache-control']).toContain('no-store');
+    expect(response.headers()['set-cookie']).toBeUndefined();
+    const body = await response.json();
+    expect(body.commit).toMatch(/^[0-9a-f]{40}$/);
+    expect(body.version).toBe(body.commit.slice(0, 7));
+});
