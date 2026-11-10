@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserPageController;
+use App\Http\Controllers\VersionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,6 +20,11 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+// What's deployed (card 4451). Outside the web group: no session, no cookies.
+Route::get('/version', VersionController::class)
+    ->withoutMiddleware('web')
+    ->name('version');
 
 Route::get('/dashboard', DashboardController::class)
     ->middleware(['auth', 'verified'])
