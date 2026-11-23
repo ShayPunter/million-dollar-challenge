@@ -8,7 +8,6 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserPageController;
 use App\Http\Controllers\VersionController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,8 +15,6 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
     ]);
 });
 

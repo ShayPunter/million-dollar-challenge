@@ -130,18 +130,56 @@ test('update the profile, log out and log back in', async ({ page }) => {
     await page.reload();
     await expect(page.locator('#name')).toHaveValue('Renamed User');
 
+    // Card 5532: a new email address needs the current password.
+    const newEmail = `e2e-moved-${Date.now()}@example.test`;
+    await expect(page.locator('#email_current_password')).toHaveCount(0);
+    await page.locator('#email').fill(newEmail);
+    await expect(page.locator('#email_current_password')).toBeVisible();
+    await page.locator('#email_current_password').fill('not-my-password');
+    await page.getByRole('button', { name: 'Save' }).first().click();
+    await expect(page.getByText('The password is incorrect.')).toBeVisible();
+    await page.locator('#email_current_password').fill('correct-horse-battery');
+    await page.getByRole('button', { name: 'Save' }).first().click();
+    await expect(page.getByText('Saved.').first()).toBeVisible();
+    await page.reload();
+    await expect(page.locator('#email')).toHaveValue(newEmail);
+    await expect(page.locator('#email_current_password')).toHaveCount(0);
+
     // Log Out is a <Link method="post" as="button">.
     await page.getByRole('button', { name: 'Renamed User' }).first().click();
     await page.getByRole('button', { name: 'Log Out' }).first().click();
     await expect(page).toHaveURL(/\/$/);
     expect((await page.goto('/dashboard')).url()).toMatch(/\/login$/);
 
-    await page.locator('#email').fill(email);
+    await page.locator('#email').fill(newEmail);
     await page.locator('#password').fill('correct-horse-battery');
     await page.getByRole('button', { name: 'Log in' }).click();
-    await expect(page).toHaveURL(/\/dashboard$/);
+    // The new address isn't verified yet.
+    await expect(page).toHaveURL(/\/verify-email$/);
+    await page.goto(verificationUrl(newEmail));
+    await expect(page).toHaveURL(/\/dashboard(\?verified=1)?$/);
     await expect(page.getByText('Renamed User').first()).toBeVisible();
     expect(errors).toEqual([]);
+});
+
+test('forgot password does not say whether an address has an account (#5532)', async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', (err) => errors.push(err.message));
+
+    await page.goto('/forgot-password');
+    await page.locator('#email').fill('nobody-here@example.test');
+    await page.getByRole('button', { name: 'Email Password Reset Link' }).click();
+    await expect(page.getByText('We have emailed your password reset link.')).toBeVisible();
+    await expect(page.getByText(/can't find a user/)).toHaveCount(0);
+    expect(errors).toEqual([]);
+});
+
+test('the home page sends no framework or PHP version (#5532)', async ({ page }) => {
+    await page.goto('/');
+    const props = await page.evaluate(() => document.getElementById('app')?.dataset.page ?? document.querySelector('script[data-page]')?.textContent ?? '');
+    expect(props).toContain('canLogin');
+    expect(props).not.toContain('laravelVersion');
+    expect(props).not.toContain('phpVersion');
 });
 
 test('/version shows the deployed commit as JSON (#4451)', async ({ request }) => {

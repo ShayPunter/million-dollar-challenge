@@ -127,4 +127,19 @@ return [
 
     'verification_required' => (bool) env('MAIL_VERIFICATION_REQUIRED', true),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Sign-up and password reset limits (card 5532)
+    |--------------------------------------------------------------------------
+    |
+    | Per IP address, for POST /register and POST /forgot-password
+    | (AppServiceProvider::configureAccountLimits).
+    |
+    */
+
+    'account_limits' => [
+        'register_per_hour' => (int) (env('AUTH_REGISTER_PER_HOUR') ?: 5),
+        'password_resets_per_minute' => (int) (env('AUTH_PASSWORD_RESETS_PER_MINUTE') ?: 6),
+    ],
+
 ];
