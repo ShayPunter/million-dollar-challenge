@@ -191,3 +191,33 @@ test('/version shows the deployed commit as JSON (#4451)', async ({ request }) =
     expect(body.commit).toMatch(/^[0-9a-f]{40}$/);
     expect(body.version).toBe(body.commit.slice(0, 7));
 });
+
+test('the site can frame its own pages and nobody else can (#5533)', async ({ page, baseURL }) => {
+    const response = await page.goto('/tos');
+    expect(response.headers()['content-security-policy']).toContain("frame-ancestors 'self'");
+    expect(response.headers()['strict-transport-security']).toBe('max-age=31536000');
+
+    // Same origin, like the home page's live example: the frame loads.
+    await page.evaluate(() => {
+        const frame = document.createElement('iframe');
+        frame.id = 'same-origin';
+        frame.src = '/tos';
+        document.body.append(frame);
+    });
+    await expect(page.frameLocator('#same-origin').getByRole('heading', { name: 'Terms of Service' })).toBeVisible();
+
+    // Another origin (localhost instead of 127.0.0.1): the browser refuses the frame.
+    const refusals = [];
+    page.on('console', (message) => {
+        if (message.text().includes('frame-ancestors')) refusals.push(message.text());
+    });
+    const other = new URL(baseURL);
+    other.hostname = 'localhost';
+    await page.goto(new URL('/tos', other).href);
+    await page.evaluate((src) => {
+        const frame = document.createElement('iframe');
+        frame.src = src;
+        document.body.append(frame);
+    }, new URL('/tos', baseURL).href);
+    await expect.poll(() => refusals.length).toBeGreaterThan(0);
+});
