@@ -45,30 +45,56 @@
                     <div>
                         <div class="p-8 rounded-lg overflow-auto">
                             <div class="flex justify-center">
-                                <div class="inline-grid grid-cols-20 lg:grid-cols-40 gap-[3px]">
+                                <!--
+                                    One node per cube and one shared tooltip (#5750). Hover and the
+                                    arrow keys move the tooltip; the cells themselves never re-render.
+                                -->
+                                <div
+                                    ref="grid"
+                                    class="relative inline-grid grid-cols-20 lg:grid-cols-40 gap-[3px] outline-none"
+                                    tabindex="0"
+                                    role="group"
+                                    :aria-label="`${numberFormat(completed)} of 1,000 cubes complete. Use the arrow keys to read each cube's amount.`"
+                                    data-test="cube-grid"
+                                    @mouseover="onHover"
+                                    @mouseleave="hideTip"
+                                    @focus="onFocus"
+                                    @blur="hideTip"
+                                    @keydown="onKey"
+                                >
                                     <div
                                         v-for="i in 1000"
                                         :key="i"
+                                        v-memo="[i <= completed, i === completed, delayStep]"
                                         class="w-3 h-3 relative"
+                                        :class="i <= completed
+                                            ? 'bg-green-500 dark:bg-green-600 animate-scale-in'
+                                            : 'bg-gray-200 dark:bg-gray-700'"
+                                        :style="i <= completed ? { animationDelay: `${Math.round(i * delayStep)}ms` } : null"
                                     >
+                                        <!-- Only the newest cube pulses: one infinite animation, not one per cube. -->
                                         <div
-                                            v-if="i <= stats.completed_cubes"
+                                            v-if="i === completed"
                                             class="absolute top-0 left-0 w-full h-full z-10 animate-big-pulse bg-green-500 dark:bg-green-600 pointer-events-none"
                                         />
-                                        <div
-                                            class="block w-full h-full relative group transition-all duration-200"
-                                            :class="[
-                            i <= stats.completed_cubes
-                                ? 'bg-green-500 dark:bg-green-600 animate-scale-in'
-                                : 'bg-gray-200 dark:bg-gray-700'
-                        ]"
-                                            :style="{ 'animation-delay': `${i * 10}ms` }"
-                                        >
-                                            <div class="opacity-0 group-hover:opacity-100 scale-0 group-hover:scale-100 transition duration-200 absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-700 rounded-md pointer-events-none whitespace-nowrap z-20">
-                                                <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-gray-700 rotate-45"></div>
-                                                ${{ numberFormat(i * 1000) }}
-                                            </div>
-                                        </div>
+                                    </div>
+
+                                    <div
+                                        v-if="tip.keyboard"
+                                        class="absolute w-3 h-3 z-20 ring-2 ring-offset-1 ring-gray-900 dark:ring-white pointer-events-none"
+                                        :style="{ left: `${tip.cellLeft}px`, top: `${tip.cellTop}px` }"
+                                        data-test="cube-focus"
+                                    />
+                                    <div
+                                        role="tooltip"
+                                        aria-live="polite"
+                                        data-test="cube-tooltip"
+                                        class="absolute -translate-x-1/2 -translate-y-full px-2 py-1 text-xs text-white bg-gray-700 rounded-md pointer-events-none whitespace-nowrap z-20 transition-[opacity,scale] duration-200 motion-reduce:transition-none"
+                                        :class="tip.shown ? 'opacity-100 scale-100' : 'opacity-0 scale-0'"
+                                        :style="{ left: `${tip.left}px`, top: `${tip.top}px` }"
+                                    >
+                                        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-2 h-2 bg-gray-700 rotate-45"></div>
+                                        ${{ numberFormat(tip.cube * 1000) }}
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +102,7 @@
                             <div class="flex flex-col max-w-148 mx-auto lg:flex-row gap-4 lg:gap-0 items-center justify-between mt-2">
                                 <p class="text-sm text-gray-700 dark:text-gray-400"><strong class="dark:text-gray-200">${{ numberFormat(stats.total_revenue) }}</strong> of $1,000,000 goal</p>
                                 <p class="text-sm text-gray-700 dark:text-gray-400">
-                                    <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-1 animate-pulse"></span>
+                                    <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-1 motion-safe:animate-pulse"></span>
                                     <strong class="dark:text-gray-200 mr-1">Last Update:</strong>
                                     <span v-if="stats.last_updated">
                                         {{ formatLastUpdate(stats.last_updated) }}
@@ -125,8 +151,9 @@
 
 <script setup>
 import {Head} from "@inertiajs/vue3";
+import {computed, reactive, ref} from "vue";
 
-defineProps({
+const props = defineProps({
     page: {
         type: Object,
         required: true
@@ -143,8 +170,71 @@ defineProps({
     }
 })
 
-const numberFormat = (value) => {
-    return new Intl.NumberFormat('en-US').format(value)
+const formatter = new Intl.NumberFormat('en-US')
+const numberFormat = (value) => formatter.format(value)
+
+const completed = computed(() => Math.min(1000, Number(props.stats.completed_cubes) || 0))
+
+// The cubes scale in one after another, 10 ms apart, but the whole wave fits in
+// 0.5 s (+ 0.5 s for the last cube's own animation), however many cubes are done.
+const delayStep = computed(() => Math.min(10, 500 / Math.max(1, completed.value)))
+
+// One tooltip for the whole grid, placed over the cube under the pointer or the
+// keyboard cursor (arrow keys while the grid has focus).
+const grid = ref(null)
+const tip = reactive({ cube: 1, left: 0, top: 0, cellLeft: 0, cellTop: 0, shown: false, keyboard: false })
+
+const showTip = (cube, keyboard = false) => {
+    const cell = grid.value?.children[cube - 1]
+    if (!cell) {
+        return
+    }
+    tip.cube = cube
+    tip.cellLeft = cell.offsetLeft
+    tip.cellTop = cell.offsetTop
+    tip.left = cell.offsetLeft + cell.offsetWidth / 2
+    tip.top = cell.offsetTop - 8
+    tip.keyboard = keyboard
+    tip.shown = true
+}
+
+const hideTip = () => {
+    tip.shown = false
+    tip.keyboard = false
+}
+
+const onHover = (event) => {
+    // The cells are the grid's first 1,000 children; the gaps between them hit the grid itself.
+    const index = event.target.parentElement === grid.value
+        ? Array.prototype.indexOf.call(grid.value.children, event.target)
+        : -1
+    if (index >= 0 && index < 1000) {
+        showTip(index + 1)
+    }
+}
+
+const onFocus = () => {
+    // A mouse click focuses the grid too; only keyboard focus gets the cursor.
+    if (grid.value?.matches(':focus-visible')) {
+        showTip(Math.max(1, completed.value), true)
+    }
+}
+
+const onKey = (event) => {
+    const columns = getComputedStyle(grid.value).gridTemplateColumns.split(' ').length
+    const moves = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -columns, ArrowDown: columns }
+    let cube
+    if (event.key in moves) {
+        cube = (tip.keyboard ? tip.cube : Math.max(1, completed.value)) + moves[event.key]
+    } else if (event.key === 'Home') {
+        cube = 1
+    } else if (event.key === 'End') {
+        cube = 1000
+    } else {
+        return
+    }
+    event.preventDefault()
+    showTip(Math.min(1000, Math.max(1, cube)), true)
 }
 
 const formatLastUpdate = (date) => {
@@ -196,11 +286,23 @@ const formatLastUpdate = (date) => {
     }
 }
 
+/* `backwards`: hidden during its delay; once done the cube is back to its own
+   style (scale 1, opacity 1), so the finished animation no longer stays alive. */
 .animate-scale-in {
-    animation: scale-in 0.5s ease-out forwards;
+    animation: scale-in 0.5s ease-out backwards;
 }
 
 .animate-big-pulse {
     animation: big-pulse 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-scale-in {
+        animation: none;
+    }
+
+    .animate-big-pulse {
+        display: none;
+    }
 }
 </style>

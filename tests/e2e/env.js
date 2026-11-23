@@ -32,3 +32,12 @@ export function verificationUrl(email) {
 
     return execSync(`php tests/e2e/verification-url.php ${email}`, { env, encoding: 'utf8' }).trim();
 }
+
+/** A verified owner with a public grid at /grid/<slug> and `total` dollars of revenue. */
+export function seedGrid(slug, total) {
+    if (!/^[\w-]+$/.test(slug) || !Number.isFinite(total)) {
+        throw new Error(`Unexpected grid seed: ${slug} ${total}`);
+    }
+
+    return execSync(`php tests/e2e/seed-grid.php ${slug} ${total}`, { env, encoding: 'utf8' }).trim();
+}
