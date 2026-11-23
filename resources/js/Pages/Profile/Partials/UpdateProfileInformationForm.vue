@@ -4,6 +4,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 defineProps({
     mustVerifyEmail: {
@@ -19,7 +20,20 @@ const user = usePage().props.auth.user;
 const form = useForm({
     name: user.name,
     email: user.email,
+    current_password: '',
 });
+
+// Card 5532: a new email address needs the current password.
+const changesEmail = computed(() => form.email !== user.email);
+
+const submit = () => {
+    form.transform((data) =>
+        changesEmail.value ? data : { name: data.name, email: data.email },
+    ).patch(route('profile.update'), {
+        preserveScroll: true,
+        onFinish: () => form.reset('current_password'),
+    });
+};
 </script>
 
 <template>
@@ -35,7 +49,7 @@ const form = useForm({
         </header>
 
         <form
-            @submit.prevent="form.patch(route('profile.update'))"
+            @submit.prevent="submit"
             class="mt-6 space-y-6"
         >
             <div>
@@ -67,6 +81,30 @@ const form = useForm({
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div v-if="changesEmail">
+                <InputLabel for="email_current_password" value="Current password" />
+
+                <TextInput
+                    id="email_current_password"
+                    type="password"
+                    class="mt-1 block w-full"
+                    v-model="form.current_password"
+                    required
+                    autocomplete="current-password"
+                />
+
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                    Changing your email address needs your current password.
+                    Signed up with Google? Set one with "Forgot your password?"
+                    on the login page first.
+                </p>
+
+                <InputError
+                    class="mt-2"
+                    :message="form.errors.current_password"
+                />
             </div>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
