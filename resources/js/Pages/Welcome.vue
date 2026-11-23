@@ -14,6 +14,8 @@
                             <img
                                 class="h-8 w-auto"
                                 src="/logo1m.png"
+                                width="901"
+                                height="901"
                                 alt="MyMillionDollarGrid"
                             />
                             <span class="ml-3 text-lg font-semibold text-vulcan-900 dark:text-vulcan-50">
@@ -78,6 +80,8 @@
                     <div class="relative rounded-xl overflow-hidden shadow-xl">
                         <img
                             src="/hero.png"
+                            width="1686"
+                            height="1038"
                             alt="Million Dollar Grid Dashboard"
                             class="w-full h-auto"
                         />

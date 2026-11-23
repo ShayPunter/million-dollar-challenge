@@ -17,9 +17,10 @@ class DashboardController extends Controller
             $page = $user->userPage;
         }
 
-        // Get projects with their total revenue
+        // Get projects with their total revenue. The dashboard only shows each
+        // revenue's date and amount (and edits it by id), so load just those (#5751).
         $projects = $user->projects()
-            ->with('revenues')
+            ->with(['revenues' => fn ($query) => $query->select('id', 'project_id', 'amount', 'created_at')])
             ->withSum('revenues as amount', 'amount')
             ->get();
 
